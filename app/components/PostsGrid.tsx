@@ -27,7 +27,7 @@ const PostsGrid = () => {
     "https://picsum.photos/id/257/1024/768",
   ];
 
-//   react-masonry-css Is a React Component with a simple interface to order items into the desired columns at specified breakpoints. With minimal CSS this leads to a quick, reliable solution that also has great browser support along with rendering performance.
+//  react-masonry-css Is a React Component with a simple interface to order items into the desired columns at specified breakpoints. With minimal CSS this leads to a quick, reliable solution that also has great browser support along with rendering performance.
 
   return (
     <div className="max-w-4xl mx-auto">
@@ -42,8 +42,8 @@ const PostsGrid = () => {
       >
         {/* array of JSX items */}
         {imageUrls.map((img) => (
-          <div className="mb-4">
-            <img src={img} alt="" key={img} />
+          <div className="mb-4" key={img}>
+            <img src={img} alt="" />
           </div>
         ))}
       </Masonry>

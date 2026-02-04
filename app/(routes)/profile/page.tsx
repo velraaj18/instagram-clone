@@ -17,7 +17,7 @@ const ProfilePage = () => {
           </div>
         </div>
         <div className="">
-          <Cog />
+          <Link href={"/settings"}><Cog /></Link>         
         </div>
       </section>
       <section className="flex justify-center mt-8">
