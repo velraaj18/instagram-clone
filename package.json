@@ -9,10 +9,12 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "lucide-react": "^0.563.0",
     "next": "16.1.6",
     "next-auth": "^5.0.0-beta.30",
     "react": "19.2.3",
-    "react-dom": "19.2.3"
+    "react-dom": "19.2.3",
+    "react-masonry-css": "^1.0.16"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
