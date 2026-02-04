@@ -15,7 +15,7 @@ const Home = async () => {
         >
           <button
             type="submit"
-            className="border-2 px-4 py-2 rounded-2xl bg-ig-red"
+            className="border-2 px-4 py-2 rounded-2xl text-white bg-ig-red"
           >
             Login with google
           </button>
@@ -30,7 +30,7 @@ const Home = async () => {
         >
           <button
             type="submit"
-            className="border-2 px-4 py-2 rounded-2xl bg-ig-red"
+            className="border-2 px-4 py-2 rounded-2xl  text-white bg-ig-red"
           >
             Logout
           </button>
