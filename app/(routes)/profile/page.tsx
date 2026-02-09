@@ -2,8 +2,11 @@ import PostsGrid from "@/app/components/PostsGrid";
 import { Check, ChevronLeft, Cog } from "lucide-react";
 import Link from "next/link";
 import React from "react";
+import { GetProfileDetails } from "../settings/actions";
 
-const ProfilePage = () => {
+const ProfilePage = async () => {
+  var profileDetails = await GetProfileDetails();
+
   return (
     <main>
       <section className="flex justify-between items-center">
@@ -11,7 +14,7 @@ const ProfilePage = () => {
           <ChevronLeft />
         </div>
         <div className="font-bold flex items-center gap-2">
-          Velraaj
+          {profileDetails.UserName}
           <div className="size-4 inline-flex justify-center items-center bg-ig-red rounded-full text-white">
             <Check size={16} />
           </div>
@@ -25,17 +28,18 @@ const ProfilePage = () => {
           <div className="size-44 p-2 rounded-full bg-white">
             <div className="size-40 aspect-square overflow-hidden rounded-full">
               <img
-                src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZSUyMGF2YXRhcnxlbnwwfHwwfHx8MA%3D%3D"
+                src={profileDetails.Avatar || ""}
                 alt=""
+                className="w-full h-full"
               />
             </div>
           </div>
         </div>
       </section>
       <section className="text-center mt-3">
-        <h1 className="text-xl font-bold">Velraaj</h1>
-        <p className="text-gray-500 mt-1 mb-1">Junior .NET developer</p>
-        <p className="text-sm font-bold">C#, ASP .NET MVC, Web API, SQL, React</p>
+        <h1 className="text-xl font-bold">{profileDetails.Name}</h1>
+        <p className="text-gray-500 mt-1 mb-1">{profileDetails.SubTitle}</p>
+        <p className="text-sm font-bold">{profileDetails.Bio}</p>
       </section>
       <section className="mt-8">
         <div className="flex justify-center font-bold gap-4">
