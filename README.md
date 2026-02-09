@@ -15,3 +15,13 @@ Link: https://lucide.dev/
 
 4. Radix-UI - An open source component library optimized for fast development, easy maintenance, and accessibility. Just import and go—no configuration required.
 Link: https://www.radix-ui.com/
+
+5. Prisma - ORM tool: Prisma is a modern ORM (Object–Relational Mapping) tool for Node.js and TypeScript that makes working with databases much easier, safer, and more predictable.
+
+    - prisma - The Prisma CLI for running commands like prisma init, prisma db push, and prisma generate
+    - @prisma/client - The Prisma Client library for querying your database
+
+Link: https://www.prisma.io/docs
+
+6. Pinata - Pinata is a cloud service that helps you store files on IPFS (InterPlanetary File System) in a reliable way.
+
