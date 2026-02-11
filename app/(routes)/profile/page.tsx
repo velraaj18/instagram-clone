@@ -6,6 +6,7 @@ import { GetProfileDetails } from "../settings/actions";
 
 const ProfilePage = async () => {
   var profileDetails = await GetProfileDetails();
+  console.log(profileDetails)
 
   return (
     <main>
