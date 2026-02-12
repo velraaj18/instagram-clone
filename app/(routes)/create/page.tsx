@@ -1,9 +1,9 @@
 "use client";
 
-import { pinata } from "@/lib/config";
 import { Button, TextArea } from "@radix-ui/themes";
 import { SendIcon, UploadCloudIcon } from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
+import CreatePost from "./action";
 
 const CreatePage = () => {
   const fileInRef = useRef<HTMLInputElement | null>(null);
@@ -14,47 +14,47 @@ const CreatePage = () => {
     if (!file) return;
     const data = new FormData();
     data.set("file", file);
-    fetch("api/uploadFile", {
+
+    fetch("/api/uploadFile", {
       method: "POST",
       body: data,
     }).then(async (res) => {
       const response = await res.json();
-      console.log(response);
       const url = `https://${process.env.NEXT_PUBLIC_GATEWAY_URL}/files/${response.data.cid}`;
       setImageURL(url);
     });
   }, [file]);
+
   return (
-    <form className="flex flex-col gap-6 mt-16">
-        <div className="w-48 min-h-64 bg-gray-500 flex items-center justify-center relative">
-          <img src="https://picsum.photos/id/237/200/300" alt="" />
-          <div className="absolute inset-0 flex items-center justify-center">
-            <input
-              type="file"
-              className="hidden"
-              ref={fileInRef}
-              onChange={(e) => setFile(e.target?.files?.[0] || null)}
-              name="PostFile"
-            />
-            <Button type="button" onClick={() => fileInRef.current?.click()}>
-              <UploadCloudIcon size={16} />
-              Add image here
-            </Button>
-          </div>
+    <form className="flex flex-col gap-6 mt-16" action={CreatePost}>
+      <input type="hidden" name="ImageLink" value={imageUrl || ""} />
+
+      <div className="w-48 min-h-64 bg-gray-500 flex items-center justify-center relative">
+        {imageUrl && <img src={imageUrl} alt="" />}
+        <div className="absolute inset-0 flex items-center justify-center">
+          <input
+            type="file"
+            className="hidden"
+            ref={fileInRef}
+            onChange={(e) => setFile(e.target?.files?.[0] || null)}
+          />
+          <Button type="button" variant="surface" onClick={() => fileInRef.current?.click()}>
+            <UploadCloudIcon size={16} />
+            Add image here
+          </Button>
+        </div>
       </div>
-      <div>
-        <TextArea
-          rows={6}
-          placeholder="Add content here..."
-          name="PostContent"
-        />
-      </div>
-      <div>
-        <Button className="flex">
-          <SendIcon size={16} />
-          Publish
-        </Button>
-      </div>
+
+      <TextArea
+        rows={6}
+        placeholder="Add content here..."
+        name="PostContent"
+      />
+
+      <Button className="flex" type="submit">
+        <SendIcon size={16} />
+        Publish
+      </Button>
     </form>
   );
 };
