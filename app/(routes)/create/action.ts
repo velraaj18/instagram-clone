@@ -27,3 +27,5 @@ export default async function CreatePost(data: FormData) {
 
   redirect(`/post/${response.id}`);
 }
+
+
