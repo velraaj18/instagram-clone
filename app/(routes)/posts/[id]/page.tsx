@@ -1,5 +1,7 @@
+import Avatar from "@/app/components/Avatar";
 import { GetProfileDetails } from "../../settings/actions";
 import { GetSinglePostById } from "./action";
+import CommentForm from "@/app/components/CommentForm";
 
 export default async function SinglePostById({
   params,
@@ -12,31 +14,29 @@ export default async function SinglePostById({
 
   return (
     <>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 auto-rows-max">
         <div>
           {post.ImageUrl && (
-            <img src={post.ImageUrl} alt={post.PostContent || ""}></img>
+            <img src={post.ImageUrl} alt={post.PostContent || ""} className=""></img>
           )}
         </div>
         <div className="">
           <div className="flex gap-2">
-            <div className="size-16 aspect-square overflow-hidden rounded-full">
-              {profile.Avatar && (
-                <img
-                  src={profile.Avatar}
-                  alt="profile"
-                  className="w-full h-full object-cover"
-                ></img>
-              )}
+            <Avatar profileUrl={profile.Avatar || ""}/>
+            <div className="flex flex-col w-5/6">
+                <h3 className="text-lg font-bold">{profile.Name}</h3>
+                <span className="text-xs font-bold text-gray-600 -mt-1">{profile.UserName}</span>
+                <div className="bg-gray-300 rounded-md mt-4 p-4">
+                   <p className="">{post.PostContent}</p>
+                </div>
             </div>
-            <div className="flex flex-col">
-                <h4>{profile.Name}</h4>
-                <span className="text-sm text-gray-500 mt-1">{profile.UserName}</span>
-                 <p>{post.PostContent}</p>
-            </div>
-          </div>
-           
+          </div>  
+          <div className="border-t border-t-gray-300 mt-4"></div>
+          <div className="mt-8">
+            <CommentForm/>  
+          </div>       
         </div>
+
       </div>
     </>
   );
