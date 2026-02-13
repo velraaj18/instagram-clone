@@ -20,16 +20,3 @@ export async function GetAllPostsByUserId(userId: string) {
 
   return response;
 }
-
-export async function AddComment(data: PostComment) {
-  if (data) {
-    const response = await prisma.postComment.create({
-      data: {
-        commentContent: data.commentContent,
-        profileId : data.profileId,
-        postId : data.postId
-      },
-    });
-    return response
-  }
-}

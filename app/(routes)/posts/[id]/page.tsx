@@ -33,7 +33,7 @@ export default async function SinglePostById({
           </div>  
           <div className="border-t border-t-gray-300 mt-4"></div>
           <div className="mt-8">
-            <CommentForm/>  
+            <CommentForm postId={post.id} profile={profile}/>  
           </div>       
         </div>
 

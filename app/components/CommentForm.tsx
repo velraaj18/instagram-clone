@@ -1,21 +1,66 @@
-import { Button, TextArea } from "@radix-ui/themes";
-import { GetProfileDetails } from "../(routes)/settings/actions";
-import Avatar from "./Avatar";
-import { SendIcon, UploadCloudIcon } from "lucide-react";
-import { AddComment } from "../(routes)/posts/[id]/action";
+"use client";
 
-export default async function CommentForm() {
-  const profile = await GetProfileDetails();
-  
+import { Button, TextArea } from "@radix-ui/themes";
+import Avatar from "./Avatar";
+import { SendIcon } from "lucide-react";
+import { useState } from "react";
+import type { PostComment } from "@/dto/PostComment";
+import type { Profile } from "@/generated/prisma/client";
+
+export default function CommentForm({
+  postId,
+  profile,
+}: {
+  postId: string;
+  profile: Profile;
+}) {
+  const [form, setForm] = useState<PostComment>({
+    commentContent: "",
+    postId: postId,
+    profileId: profile.id,
+  });
+
+  async function saveComment() {
+    if (!form.commentContent.trim()) return;
+
+    const res = await fetch("/api/comments", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(form),
+    });
+
+    if (res.ok) {
+      setForm((prev) => ({ ...prev, commentContent: "" }));
+    }
+  }
+
   return (
-    <form action={}>
+    <form
+      onSubmit={async (e) => {
+        e.preventDefault();
+        await saveComment();
+      }}
+    >
       <div className="flex gap-6">
         <Avatar profileUrl={profile.Avatar || ""} />
+
         <div className="w-5/6">
-          <TextArea placeholder="Comment your thoughts here..." name="commentContent"/>
+          <TextArea
+            placeholder="Comment your thoughts here..."
+            value={form.commentContent}
+            onChange={(e) =>
+              setForm((prev) => ({
+                ...prev,
+                commentContent: e.target.value,
+              }))
+            }
+          />
+
           <div className="mt-2">
             <Button type="submit">
-              <SendIcon size={16}/>
+              <SendIcon size={16} />
               Add Comment
             </Button>
           </div>
