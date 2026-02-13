@@ -1,11 +1,13 @@
 import PostsGrid from "@/app/components/PostsGrid";
 import { Check, ChevronLeft, Cog } from "lucide-react";
 import Link from "next/link";
-import React from "react";
+import React, { Suspense } from "react";
 import { GetProfileDetails } from "../settings/actions";
+import ProfilePosts from "@/app/components/ProfilePosts";
 
 const ProfilePage = async () => {
   var profileDetails = await GetProfileDetails();
+  // console.log("profileDetails:", profileDetails)
 
   return (
     <main>
@@ -30,7 +32,7 @@ const ProfilePage = async () => {
               <img
                 src={profileDetails.Avatar || ""}
                 alt=""
-                className="w-full h-full"
+                className="w-full h-full object-cover"
               />
             </div>
           </div>
@@ -48,7 +50,10 @@ const ProfilePage = async () => {
         </div>
       </section>
       <section className="mt-8">
-        <PostsGrid/>
+        <Suspense fallback={<div className="animate-spin rounded-full h-8 w-8 border-4 border-white border-t-transparent" />}>
+          <ProfilePosts userId={profileDetails.id}/>
+        </Suspense>
+        
       </section>
     </main>
   );
