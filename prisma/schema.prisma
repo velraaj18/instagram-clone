@@ -24,6 +24,7 @@ model Profile {
   Bio String?
 
   posts Post[]
+  comments PostComment[]
 }
 
 model Post{
@@ -36,4 +37,17 @@ model Post{
   CreatedAt DateTime @default(now())
   UpdatedAt DateTime @default(now())
   likes Int @default(0)
+
+  comments PostComment[] // This means we can have multiple comments for a post
+}
+
+model PostComment{
+  id String  @id @default(auto()) @map("_id") @db.ObjectId
+  commentContent String
+
+  postId String @db.ObjectId
+  post Post @relation(fields: [postId], references: [id])
+
+  profileId String @db.ObjectId
+  profile Profile @relation(fields: [profileId], references: [id])
 }
