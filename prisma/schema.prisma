@@ -50,4 +50,7 @@ model PostComment{
 
   profileId String @db.ObjectId
   profile Profile @relation(fields: [profileId], references: [id])
+
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
 }

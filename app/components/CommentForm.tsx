@@ -6,6 +6,7 @@ import { SendIcon } from "lucide-react";
 import { useState } from "react";
 import type { PostComment } from "@/dto/PostComment";
 import type { Profile } from "@/generated/prisma/client";
+import { useRouter } from "next/navigation";
 
 export default function CommentForm({
   postId,
@@ -20,6 +21,8 @@ export default function CommentForm({
     profileId: profile.id,
   });
 
+  const router = useRouter();
+
   async function saveComment() {
     if (!form.commentContent.trim()) return;
 
@@ -33,6 +36,7 @@ export default function CommentForm({
 
     if (res.ok) {
       setForm((prev) => ({ ...prev, commentContent: "" }));
+      router.refresh();
     }
   }
 
