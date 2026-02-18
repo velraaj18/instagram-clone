@@ -1,3 +1,5 @@
+"use server"
+
 import { PostComment } from "@/dto/PostComment";
 import { prisma } from "@/lib/db";
 
@@ -21,15 +23,55 @@ export async function GetAllPostsByUserId(userId: string) {
   return response;
 }
 
-export async function AddComment(data: PostComment) {
-  if (data) {
-    const response = await prisma.postComment.create({
+export async function ToggleLike(postId : string, profileId : string){
+  const exisitingLike = await prisma.like.findUnique({
+    where: {
+      profileId_postId : {
+        profileId,
+        postId
+      }
+    }
+  })
+
+  if(exisitingLike){
+    await prisma.like.delete({
+      where: {
+      profileId_postId : {
+        profileId,
+        postId
+      }
+    }
+    })
+  }else{
+    await prisma.like.create({
       data: {
-        commentContent: data.commentContent,
-        profileId : data.profileId,
-        postId : data.postId
-      },
-    });
-    return response
+        profileId,
+        postId
+    }
+    })
   }
+
+}
+
+export async function GetLikesCountOfPost(postId : string){
+  const likeCount = await prisma.like.count({
+    where: {
+      postId : postId
+    }
+  })
+
+  return likeCount
+}
+
+export async function HasUserLiked(postId: string, profileId: string) {
+  const like = await prisma.like.findUnique({
+    where: {
+      profileId_postId: {
+        profileId,
+        postId
+      }
+    }
+  })
+
+  return !!like
 }

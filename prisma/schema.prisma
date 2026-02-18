@@ -25,20 +25,22 @@ model Profile {
 
   posts Post[]
   comments PostComment[]
+  likes Like[]
 }
 
 model Post{
   id String  @id @default(auto()) @map("_id") @db.ObjectId
+
   profileId String @db.ObjectId
   profile Profile @relation(fields: [profileId], references: [id])
-  Email String
+
   ImageUrl String?
   PostContent String?
   CreatedAt DateTime @default(now())
-  UpdatedAt DateTime @default(now())
-  likes Int @default(0)
+  UpdatedAt DateTime @updatedAt
 
   comments PostComment[] // This means we can have multiple comments for a post
+  likes Like[]
 }
 
 model PostComment{
@@ -50,4 +52,21 @@ model PostComment{
 
   profileId String @db.ObjectId
   profile Profile @relation(fields: [profileId], references: [id])
+
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model Like{
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  
+  postId String @db.ObjectId
+  post Post @relation(fields: [postId], references: [id])
+
+  profileId String @db.ObjectId
+  profile Profile @relation(fields: [profileId], references: [id])
+
+  createdAt DateTime @default(now())
+
+  @@unique([profileId, postId]) // one like per user per post
 }

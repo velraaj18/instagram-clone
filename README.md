@@ -25,3 +25,4 @@ Link: https://www.prisma.io/docs
 
 6. Pinata - Pinata is a cloud service that helps you store files on IPFS (InterPlanetary File System) in a reliable way.
 
+7. date-fns - For formating the date. date-fns provides the most comprehensive, yet simple and consistent toolset for manipulating JavaScript dates in a browser & Node.js
