@@ -1,9 +1,10 @@
 import Avatar from "@/app/components/Avatar";
 import { GetProfileDetails } from "../../settings/actions";
-import { GetSinglePostById } from "./action";
+import { GetLikesCountOfPost, GetSinglePostById, HasUserLiked } from "./action";
 import CommentForm from "@/app/components/CommentForm";
 import { prisma } from "@/lib/db";
 import CommentPage from "@/app/components/Comment";
+import LikeInfo from "@/app/components/LikeInfo";
 
 export default async function SinglePostById({
   params,
@@ -13,6 +14,8 @@ export default async function SinglePostById({
   const { id } = await params;
   const post = await GetSinglePostById(id);
   const profile = await GetProfileDetails();
+  const likesCount = await GetLikesCountOfPost(id);
+  const hasLiked = await HasUserLiked(id, profile.id);
 
   const comments = await prisma.postComment.findMany({
     where: { postId: post.id },
@@ -45,16 +48,27 @@ export default async function SinglePostById({
                 <p className="">{post.PostContent}</p>
               </div>
 
-              <div className="header mt-6">
+              <div className="mt-4">
+                <LikeInfo
+                  postId={post.id}
+                  profileId={profile.id}
+                  initialLikes={likesCount}
+                  initiallyLiked={hasLiked}
+                />
+              </div>
+              <div className="border-t border-t-gray-300 mt-4"></div>
+
+              <div className="header mt-4">
                 <h2 className="text-lg font-bold">Comments</h2>
                 {comments &&
                   comments.map((res) => (
                     <CommentPage comment={res} key={res.id} />
                   ))}
+                <div className="border-t border-t-gray-300 mt-4"></div>
               </div>
             </div>
           </div>
-          <div className="border-t border-t-gray-300 mt-4"></div>
+
           <div className="mt-8">
             <CommentForm postId={post.id} profile={profile} />
           </div>

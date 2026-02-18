@@ -3,8 +3,8 @@ import { PostComment } from "@/dto/PostComment";
 import React from "react";
 import { format, formatDate } from "date-fns";
 
-const CommentPage = (comment: { comment: Comment }) => {
-  const data = comment.comment;
+const CommentPage = ({comment}: { comment: Comment }) => {
+  const data = comment;
 
    const formattedDate = data.createdAt
     ? format(new Date(data.createdAt), "PPpp")
