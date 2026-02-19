@@ -58,14 +58,15 @@ export default async function SinglePostById({
               </div>
               <div className="border-t border-t-gray-300 mt-4"></div>
 
-              <div className="header mt-4">
-                <h2 className="text-lg font-bold">Comments</h2>
-                {comments &&
-                  comments.map((res) => (
+              {comments?.length > 0 && (
+                <div className="header mt-4">
+                  <h2 className="text-lg font-bold">Comments</h2>
+                  {comments.map((res) => (
                     <CommentPage comment={res} key={res.id} />
                   ))}
-                <div className="border-t border-t-gray-300 mt-4"></div>
-              </div>
+                  <div className="border-t border-t-gray-300 mt-4"></div>
+                </div>
+              )}
             </div>
           </div>
 

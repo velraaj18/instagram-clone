@@ -1,6 +1,5 @@
 "use server"
 
-import { PostComment } from "@/dto/PostComment";
 import { prisma } from "@/lib/db";
 
 export async function GetSinglePostById(postId: string) {
