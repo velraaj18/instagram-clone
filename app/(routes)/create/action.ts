@@ -16,7 +16,6 @@ export default async function CreatePost(data: FormData) {
       Email: session.user.email,
       ImageUrl: image,
       PostContent: content,
-      likes: 0,
       profile : {
         connect:{
             Email: session.user.email

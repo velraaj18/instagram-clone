@@ -16,7 +16,10 @@ export default async function SinglePostById({
   const post = await GetSinglePostById(id);
   const profile = await GetProfileDetails();
   const likesCount = await GetLikesCountOfPost(id);
-  const hasLiked = await HasUserLiked(id, profile.id);
+  const hasLiked = profile
+  ? await HasUserLiked(id, profile.id)
+  : false;
+
 
   const comments = await prisma.postComment.findMany({
     where: { postId: post.id },
@@ -27,7 +30,9 @@ export default async function SinglePostById({
 
   return (
     <>
-      <SinglePost post={post} profile={profile} likesCount={likesCount} hasLiked={hasLiked} postComments={comments}/>
+    {profile && 
+       <SinglePost post={post} profile={profile} likesCount={likesCount} hasLiked={hasLiked} postComments={comments}/>
+    }
     </>
   );
 }

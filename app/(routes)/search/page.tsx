@@ -1,19 +1,46 @@
+"use client";
+
+import { useState, useEffect } from "react";
 import { TextField } from "@radix-ui/themes";
 import { SearchIcon } from "lucide-react";
-import React from "react";
+import { GetSearchProfile } from "@/app/action";
 
-const SearchPage = () => {
+export default function SearchInput() {
+  const [query, setQuery] = useState("");
+  const [results, setResults] = useState([]);
+
+  useEffect(() => {
+    if (!query) return;
+
+    const delayDebounce = setTimeout(async () => {
+      const res = await fetch(`/api/search?query=${query}`);
+      const data = await res.json();
+      setResults(data);
+      console.log(data)
+    }, 300); // debounce
+
+    return () => clearTimeout(delayDebounce);
+  }, [query]);
+
   return (
-    <div className="max-w-md mx-auto">
-      <div>
-        <TextField.Root placeholder="search posts or people..">
-          <TextField.Slot>
-            <SearchIcon />
-          </TextField.Slot>
-        </TextField.Root>
-      </div>
-    </div>
-  );
-};
+    <>
+      <TextField.Root
+        placeholder="search posts or people.."
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+      >
+        <TextField.Slot>
+          <SearchIcon />
+        </TextField.Slot>
+      </TextField.Root>
 
-export default SearchPage;
+      <div className="mt-4">
+        {results.map((user: any) => (
+          <div key={user.id} className="p-2 border-b">
+            {user.username}
+          </div>
+        ))}
+      </div>
+    </>
+  );
+}
