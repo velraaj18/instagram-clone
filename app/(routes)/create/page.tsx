@@ -33,10 +33,10 @@ const CreatePage = () => {
   }, [file]);
 
   return (
-    <form className="flex flex-col gap-6 mt-16" action={CreatePost}>
+    <form className="flex flex-col gap-6 mt-16 max-w-md mx-auto" action={CreatePost}>
       <input type="hidden" name="ImageLink" value={imageUrl || ""} />
 
-      <div className="w-48 min-h-64 bg-gray-500 flex items-center justify-center relative">
+      <div className="min-h-64 bg-gray-500 flex items-center justify-center relative">
         {/* Show image if uploaded */}
         {imageUrl && !isUploading && (
           <img

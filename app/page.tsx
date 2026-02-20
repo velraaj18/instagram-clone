@@ -5,7 +5,6 @@ const Home = async () => {
   const session = await auth();
   return (
     <>
-      <div className="bg-ig-orange">Test</div>
       {!session && (
         <form
           action={async () => {

@@ -7,10 +7,10 @@ import { UploadCloudIcon } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 
-const SettingsForm = ({ userDetails }: { userDetails: Profile }) => {
+const SettingsForm = ({ userDetails }: { userDetails?: Profile }) => {
   const fileInRef = useRef<HTMLInputElement>(null);
   const [file, setFile] = useState<File | null>(null);
-  const [avatarUrl, setAvatarUrl] = useState(userDetails.Avatar);
+  const [avatarUrl, setAvatarUrl] = useState(userDetails?.Avatar);
   const router = useRouter();
 
   useEffect(() => {
@@ -23,6 +23,7 @@ const SettingsForm = ({ userDetails }: { userDetails: Profile }) => {
     }).then(async (res) => {
       const response = await res.json();
       const url = `https://${process.env.NEXT_PUBLIC_GATEWAY_URL}/files/${response.data.cid}`;
+      console.log(response)
       setAvatarUrl(url);
     });
   }, [file]);
@@ -37,11 +38,13 @@ const SettingsForm = ({ userDetails }: { userDetails: Profile }) => {
       <form action={action}>
         <div className="flex items-center gap-4 mb-5">
           <div className="bg-gray-500 size-24 rounded-full">
-            <img
-              src={userDetails.Avatar || ""}
-              alt=""
-              className="size-24 aspect-square rounded-full overflow-hidden border-2 border-red-500"
-            />
+            {userDetails?.Avatar && (
+              <img
+                src={userDetails.Avatar}
+                alt=""
+                className="size-24 w-full h-full object-cover rounded-full border-red-500"
+              />
+            )}
           </div>
           <input
             type="file"
@@ -62,14 +65,14 @@ const SettingsForm = ({ userDetails }: { userDetails: Profile }) => {
         <TextField.Root
           name="UserName"
           placeholder="UserName"
-          defaultValue={userDetails.UserName}
+          defaultValue={userDetails?.UserName}
         />
 
         <p className="text-sm font-semibold text-gray-500 mt-4 mb-1">Name</p>
         <TextField.Root
           name="Name"
           placeholder="Name"
-          defaultValue={userDetails.Name}
+          defaultValue={userDetails?.Name}
         />
 
         <p className="text-sm font-semibold text-gray-500 mt-4 mb-1">
@@ -78,14 +81,14 @@ const SettingsForm = ({ userDetails }: { userDetails: Profile }) => {
         <TextField.Root
           name="SubTitle"
           placeholder="Developer"
-          defaultValue={userDetails.SubTitle || ""}
+          defaultValue={userDetails?.SubTitle || ""}
         />
 
         <p className="text-sm font-semibold text-gray-500 mt-4 mb-1">Bio</p>
-        <TextArea name="Bio" defaultValue={userDetails.Bio || ""} />
+        <TextArea name="Bio" defaultValue={userDetails?.Bio || ""} />
 
         <div className="mt-4 flex justify-end">
-          <Button type="submit" color="red">
+          <Button type="submit" color="green">
             Save settings
           </Button>
         </div>

@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { Comment } from "@/dto/Comment";
 import { Post, Profile } from "@/generated/prisma/client";
@@ -42,9 +42,11 @@ export default function SinglePost({
               <span className="text-xs font-bold text-gray-600 -mt-1">
                 {profile.UserName}
               </span>
-              <div className="bg-gray-300 rounded-md mt-4 p-4">
-                <p className="">{post.PostContent}</p>
-              </div>
+              {post.PostContent && (
+                <div className="bg-gray-300 rounded-md mt-4 p-4">
+                  <p className="">{post.PostContent}</p>
+                </div>
+              )}
 
               <div className="mt-4">
                 <LikeInfo
