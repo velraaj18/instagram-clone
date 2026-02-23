@@ -38,7 +38,7 @@ export async function GetProfileDetails(){
     throw new Error("Email address is required");
   }
 
-  const response = await prisma.profile.findFirstOrThrow({
+  const response = await prisma.profile.findFirst({
     where : {Email : session?.user?.email}
   })
 
